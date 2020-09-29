@@ -1,9 +1,12 @@
 def main
-    bucket = Hash.new
+    bucket = {}
 
-    print "purchase: "
-    purchase = gets.chomp
-    while purchase != "stop"
+    loop do
+        print "purchase: "
+        purchase = gets.chomp
+        
+        break if purchase == "stop"
+
         print "price: "
         price = gets.to_f
 
@@ -12,18 +15,17 @@ def main
 
         bucket[purchase] = {price => count}
 
-        print "purchase: "
-        purchase = gets.chomp
     end
 
     psums = []
-    for name in bucket.keys()
-        price = bucket[name].keys()[0]
-        count = bucket[name][price]
+    bucket.each { |name, price_and_count|
+        price = price_and_count.keys().first
+        count = price_and_count[price]
         sum = price * count
         psums << sum
+
         puts "purchase: #{name}, price: #{price}, count: #{count}, sum: #{sum}"
-    end
+    }
 
     puts
 
