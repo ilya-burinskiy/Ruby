@@ -13,19 +13,20 @@ def main
         print "count: "
         count = gets.to_i
 
-        bucket[purchase] = {price => count}
+        bucket[purchase] = {price: price, count: count}
+
 
     end
 
     psums = []
-    bucket.each { |name, price_and_count|
-        price = price_and_count.keys().first
-        count = price_and_count[price]
+    bucket.each do |name, prop|
+        price = prop[:price]
+        count = prop[:count]
         sum = price * count
         psums << sum
 
         puts "purchase: #{name}, price: #{price}, count: #{count}, sum: #{sum}"
-    }
+    end
 
     puts
 
