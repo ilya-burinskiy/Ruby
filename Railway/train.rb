@@ -1,69 +1,57 @@
 class Train
 
-  attr_reader :number
-  attr_reader :type
-  
-  attr_accessor :speed
-  attr_accessor :carriages
-  attr_accessor :route_it
+  attr_reader :number, :type
+  attr_accessor :speed, :carriages, :route 
+  attr_accessor :curr_station, :prev_station, :next_station
 
   def initialize(number, type)
     @number = number
     @type = type
-    @speed = 0;
-    @carriages = 0;
+    @speed = 0
+    @carriages = 0
   end
 
   def increase_speed(val)
-    self.speed += val
+    speed += val
   end
 
-  def brake()
-    self.speed = 0
+  def brake
+    speed = 0
   end
 
-  def attach_carriage()
-    if self.speed == 0
-      self.carriages += 1
-    end
+  def attach_carriage
+    carriages += 1 if speed == 0
   end
 
-  def detach_carriage()
-    if self.speed == 0
-      self.carriages -= 1
-    end
+  def detach_carriage
+    carriages -= 1 if speed == 0
   end
 
   def add_route(route)
-    self.route_it = route.get_iterator()
+    self.route = route
+    self.curr_station = self.route.dispatch_station
+    self.prev_station = self.route.station_previous_to(self.curr_station)
+    self.next_station = self.route.station_next_to(self.curr_station)
   end
 
-  def forward()
-    begin
-      self.route_it.forward()
-    rescue Exception => e
-      puts "Cannot go forward"
+  def go_forward
+    if self.next_station != nil
+      self.prev_station = self.curr_station
+      self.curr_station = self.next_station
+      self.next_station = route.station_next_to(self.next_station)
+    else
+      raise Exception.new "Cannot go forward"
     end
   end
 
-  def back()
-    begin
-      self.route_it.back()
-    rescue Exception => e
-      puts "Cannot go back"
+  def go_back
+    if self.prev_station != nil
+      self.next_station = self.curr_station
+      self.curr_station = self.prev_station
+      self.prev_station = route.station_previous_to(self.prev_station)
+    else
+      raise Exception.new "Cannot go back"
     end
-  end
-
-  def prev()
-    return self.route_it.prev()
-  end
-
-  def curr()
-    return self.route_it.curr()
-  end
-
-  def next()
-    return self.route_it.next()
   end
 
 end
