@@ -16,22 +16,16 @@ class Route
     intermediate_stations.delete(station)
   end
 
-  def print_route
-    puts dispatch_station.name
-    intermediate_stations.each do |station|
-      puts station.name
-    end
-    puts terminal_station.name
+  def stations
+    [dispatch_station, *intermediate_stations, terminal_station]
   end
 
   def station_next_to(station)
-    stations = [dispatch_station, *intermediate_stations, terminal_station]
     station_idx = stations.index(station)
     stations.fetch(station_idx + 1, nil)
   end
 
   def station_previous_to(station)
-    stations = [dispatch_station, *intermediate_stations, terminal_station]
     station_idx = stations.index(station)
     stations.fetch(station_idx - 1) if station_idx - 1 >= 0
   end

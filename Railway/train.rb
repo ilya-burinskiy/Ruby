@@ -2,7 +2,7 @@ class Train
 
   attr_reader :number, :type
   attr_accessor :speed, :carriages, :route 
-  attr_accessor :curr_station, :prev_station, :next_station
+  attr_accessor :curr_station
 
   def initialize(number, type)
     @number = number
@@ -30,28 +30,24 @@ class Train
   def add_route(route)
     self.route = route
     self.curr_station = self.route.dispatch_station
-    self.prev_station = self.route.station_previous_to(self.curr_station)
-    self.next_station = self.route.station_next_to(self.curr_station)
+  end
+  
+  def next_station
+    route.station_next_to(curr_station)
+  end
+
+  def prev_station
+    route.station_previous_to(curr_station)
   end
 
   def go_forward
-    if self.next_station != nil
-      self.prev_station = self.curr_station
-      self.curr_station = self.next_station
-      self.next_station = route.station_next_to(self.next_station)
-    else
-      raise Exception.new "Cannot go forward"
-    end
+    raise "Cannot go forward" if next_station == nil
+    self.curr_station = self.next_station
   end
 
   def go_back
-    if self.prev_station != nil
-      self.next_station = self.curr_station
-      self.curr_station = self.prev_station
-      self.prev_station = route.station_previous_to(self.prev_station)
-    else
-      raise Exception.new "Cannot go back"
-    end
+    raise "Cannot go back" if prev_station == nil
+    curr_station = prev_station
   end
 
 end
