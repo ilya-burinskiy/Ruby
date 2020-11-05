@@ -1,5 +1,4 @@
 class Route
-
   attr_reader :intermediate_stations, :dispatch_station, :terminal_station
 
   def initialize(dispatch_station, terminal_station)
@@ -29,5 +28,4 @@ class Route
     station_idx = stations.index(station)
     stations.fetch(station_idx - 1) if station_idx - 1 >= 0
   end
-
 end
