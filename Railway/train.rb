@@ -28,6 +28,7 @@ class Train
   def add_route(route)
     self.route = route
     self.curr_station = self.route.dispatch_station
+    self.curr_station.serve_train(self)
   end
 
   def next_station
@@ -41,12 +42,16 @@ class Train
   def go_forward
     raise 'Cannot go forward' if next_station.nil?
 
+    self.curr_station.send_train(self)
     self.curr_station = next_station
+    self.curr_station.serve_train(self)
   end
 
   def go_back
     raise 'Cannot go back' if prev_station.nil?
 
+    self.curr_station.send_train(self)
     self.curr_station = prev_station
+    self.curr_station.serve_train(self)
   end
 end
