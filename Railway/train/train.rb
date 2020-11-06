@@ -1,34 +1,33 @@
 class Train
-  attr_reader :number, :type
-  attr_accessor :speed, :carriages, :route, :curr_station
+  attr_reader :number, :type, :speed, :carriages, :route, :curr_station
 
   def initialize(number, type)
     @number = number
     @type = type
     @speed = 0
-    @carriages = 0
+    @carriages = []
   end
 
   def increase_speed(val)
-    speed += val
+    self.speed += val
   end
 
   def brake
-    speed = 0
+    self.speed = 0
   end
 
-  def attach_carriage
-    carriages += 1 if speed == 0
+  def attach_carriage(carriage)
+    carriages << carriage if speed == 0
   end
 
   def detach_carriage
-    carriages -= 1 if speed == 0
+    carriages.pop if speed == 0
   end
 
   def add_route(route)
     self.route = route
     self.curr_station = self.route.dispatch_station
-    self.curr_station.serve_train(self)
+    curr_station.serve_train(self)
   end
 
   def next_station
@@ -42,16 +41,19 @@ class Train
   def go_forward
     raise 'Cannot go forward' if next_station.nil?
 
-    self.curr_station.send_train(self)
+    curr_station.send_train(self)
     self.curr_station = next_station
-    self.curr_station.serve_train(self)
+    curr_station.serve_train(self)
   end
 
   def go_back
     raise 'Cannot go back' if prev_station.nil?
 
-    self.curr_station.send_train(self)
+    curr_station.send_train(self)
     self.curr_station = prev_station
-    self.curr_station.serve_train(self)
+    curr_station.serve_train(self)
   end
+
+  private
+  attr_writer :speed, :carriages, :route, :curr_station
 end
