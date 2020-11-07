@@ -1,9 +1,9 @@
-require_relative "route.rb"
-require_relative "station.rb"
-require_relative "train/carg_train.rb"
-require_relative "train/passenger_train.rb"
-require_relative "carriage/carg_carriage.rb"
-require_relative "carriage/passenger_carriage.rb"
+require_relative 'route'
+require_relative 'station'
+require_relative 'train/carg_train'
+require_relative 'train/passenger_train'
+require_relative 'carriage/carg_carriage'
+require_relative 'carriage/passenger_carriage'
 
 class Railway
   attr_reader :stations, :trains, :routes
@@ -99,20 +99,21 @@ class Railway
     if !train_exist?(train_number)
       raise "Such train doesn't exist"
     end
-      trains[train_number].detach_carriage
-    end
+    trains[train_number].detach_carriage
   end
 
   def move_train_forward(train_number)
-    if !train_exist?(trains, train_number)
+    if !train_exist?(train_number)
       raise "Such train doesn't exist"
     end
+    trains[train_number].move_forward
   end
 
   def move_train_back(train_number)
     if !train_exist?(train_number)
       raise "Such train doesn't exist"
     end
+    trains[train_number].move_back
   end
 
   def route_exist?(route_name)

@@ -1,4 +1,6 @@
-require_relative 'train.rb'
+# frozen_string_literal: true
+
+require_relative 'train'
 
 class PassengerTrain < Train
   def initialize(number)

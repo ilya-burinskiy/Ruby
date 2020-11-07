@@ -19,6 +19,4 @@ class ConsoleInterface
     print "Enter route name: "
     route_name = gets.chomp
   end
-
-  def read_route
 end

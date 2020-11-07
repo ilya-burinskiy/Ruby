@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Train
   attr_reader :number, :type, :speed, :carriages, :route, :curr_station
 
@@ -17,11 +19,11 @@ class Train
   end
 
   def attach_carriage(carriage)
-    carriages << carriage if speed == 0
+    carriages << carriage if speed.zero?
   end
 
   def detach_carriage
-    carriages.pop if speed == 0
+    carriages.pop if speed.zero?
   end
 
   def add_route(route)
@@ -39,6 +41,7 @@ class Train
   end
 
   def move_forward
+    raise 'No route' if curr_station.nil?
     raise 'Cannot go forward' if next_station.nil?
 
     curr_station.send_train(self)
@@ -47,6 +50,7 @@ class Train
   end
 
   def move_back
+    raise 'No route' if curr_station.nil?
     raise 'Cannot go back' if prev_station.nil?
 
     curr_station.send_train(self)
@@ -55,5 +59,6 @@ class Train
   end
 
   private
+
   attr_writer :speed, :carriages, :route, :curr_station
 end

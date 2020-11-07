@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Carriage
-  atrr_reader :type
+  attr_reader :type
   def initialize(type)
     @type = type
   end

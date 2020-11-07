@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Route
   attr_reader :intermediate_stations, :dispatch_station, :terminal_station
 
