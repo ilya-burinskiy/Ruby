@@ -92,9 +92,6 @@ class Railway
     if !train_exist?(train_number)
       raise "Such train doesn't exist"
     end
-    if trains[train_number].type == :carg
-      trains[train_number].detach_carriage
-    else
       trains[train_number].detach_carriage
     end
   end

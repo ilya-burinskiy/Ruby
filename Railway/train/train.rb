@@ -38,7 +38,7 @@ class Train
     route.station_previous_to(curr_station)
   end
 
-  def go_forward
+  def move_forward
     raise 'Cannot go forward' if next_station.nil?
 
     curr_station.send_train(self)
@@ -46,7 +46,7 @@ class Train
     curr_station.serve_train(self)
   end
 
-  def go_back
+  def move_back
     raise 'Cannot go back' if prev_station.nil?
 
     curr_station.send_train(self)
