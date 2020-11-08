@@ -1,5 +1,16 @@
 class ConsoleInterface
 
+  def show_instructions(instructions)
+    instructions.each do |instruction|
+      puts instruction 
+    end
+  end
+
+  def read_command
+    print '>>> '
+    gets.to_i
+  end
+
   def read_station_name
     print "Enter station name: "
     station_name = gets.chomp
@@ -19,4 +30,9 @@ class ConsoleInterface
     print "Enter route name: "
     route_name = gets.chomp
   end
+
+  def show_error(e)
+    puts e.message
+  end
+
 end
