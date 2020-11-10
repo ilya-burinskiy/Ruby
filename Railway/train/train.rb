@@ -1,19 +1,24 @@
 # frozen_string_literal: true
-require_relative '../instances_keeper.rb'
 require_relative '../instances_counter.rb'
 require_relative '../company'
 
 class Train
+
   include InstancesCounter
-  include InstancesKeeper
   include Company
+
   attr_reader :number, :type, :speed, :carriages, :route, :curr_station
+
+  @@trains = {}
 
   def initialize(number, type)
     @number = number
     @type = type
     @speed = 0
     @carriages = []
+
+    @@trains[number] = self
+    register_instance
   end
 
   def increase_speed(val)
@@ -65,7 +70,11 @@ class Train
   end
 
   def self.find(number)
-    instances.fetch(number, nil)
+    @@trains.fetch(number, nil)
+  end
+
+  def self.all
+    @@trains
   end
 
   private

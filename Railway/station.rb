@@ -5,15 +5,16 @@ require_relative 'instances_counter'
 class Station
 
   include InstancesCounter
-  include InstancesKeeper
 
   attr_reader :name, :trains
+
+  @@stations = {}
 
   def initialize(name)
     @name = name
     @trains = []
 
-    add_instance(name, self)
+    @@stations[name] = self
     register_instance
   end
 
@@ -30,10 +31,10 @@ class Station
   end
 
   def self.all
-    instances
+    @@stations
   end
 
   def self.find(name)
-    instances.fetch(name, nil)
+    @@stations.fetch(name, nil)
   end
 end
