@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require_relative 'instances_keeper.rb'
-require_relative 'instances_counter.rb'
+require_relative 'instances_keeper'
+require_relative 'instances_counter'
 
 class Station
 
