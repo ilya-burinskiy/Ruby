@@ -4,7 +4,6 @@ require_relative 'railway'
 require_relative 'console_interface'
 require_relative 'command_executor'
 
-
 def main
   instructions = [
     '1  - Create station',

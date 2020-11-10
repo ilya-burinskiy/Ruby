@@ -1,9 +1,9 @@
 # frozen_string_literal: true
-require_relative '../instances_counter.rb'
+
+require_relative '../instances_counter'
 require_relative '../company'
 
 class Train
-
   include InstancesCounter
   include Company
 

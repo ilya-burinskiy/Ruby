@@ -1,9 +1,9 @@
 # frozen_string_literal: true
+
 require_relative 'instances_keeper'
 require_relative 'instances_counter'
 
 class Station
-
   include InstancesCounter
 
   attr_reader :name, :trains
