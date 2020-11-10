@@ -6,14 +6,14 @@ module InstancesCounter
   end
 
   module ClassMethods
-    @@instances_number = 0
-    def instances_number
-      @@instances_number
+    def instances
+      @instances_number
     end
 
     protected
     def register_instance
-      @@instances_number += 1
+      @instances_number = @instances_number.nil? ? 0 : @instances_number
+      @instances_number += 1
     end
   end
 
