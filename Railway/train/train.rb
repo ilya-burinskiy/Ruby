@@ -1,6 +1,10 @@
 # frozen_string_literal: true
+require_relative 'instances_keeper.rb'
+require_relative 'instances_counter.rb'
 
 class Train
+  include InstancesCounter
+  include InstancesKeeper
   attr_reader :number, :type, :speed, :carriages, :route, :curr_station
 
   def initialize(number, type)
@@ -56,6 +60,10 @@ class Train
     curr_station.send_train(self)
     self.curr_station = prev_station
     curr_station.serve_train(self)
+  end
+
+  def self.find(number)
+    instances.fetch(number, nil)
   end
 
   private
