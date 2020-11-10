@@ -32,4 +32,8 @@ class Station
   def self.all
     instances
   end
+
+  def self.find(name)
+    instances.fetch(name, nil)
+  end
 end
