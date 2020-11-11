@@ -1,13 +1,24 @@
 # frozen_string_literal: true
 
+require_relative '../instances_counter'
+require_relative '../company'
+
 class Train
+  include InstancesCounter
+  include Company
+
   attr_reader :number, :type, :speed, :carriages, :route, :curr_station
+
+  @@trains = {}
 
   def initialize(number, type)
     @number = number
     @type = type
     @speed = 0
     @carriages = []
+
+    @@trains[number] = self
+    register_instance
   end
 
   def increase_speed(val)
@@ -56,6 +67,14 @@ class Train
     curr_station.send_train(self)
     self.curr_station = prev_station
     curr_station.serve_train(self)
+  end
+
+  def self.find(number)
+    @@trains.fetch(number, nil)
+  end
+
+  def self.all
+    @@trains
   end
 
   private

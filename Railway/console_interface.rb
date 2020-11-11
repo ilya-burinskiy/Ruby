@@ -1,8 +1,9 @@
-class ConsoleInterface
+# frozen_string_literal: true
 
+class ConsoleInterface
   def show_instructions(instructions)
     instructions.each do |instruction|
-      puts instruction 
+      puts instruction
     end
   end
 
@@ -12,27 +13,26 @@ class ConsoleInterface
   end
 
   def read_station_name
-    print "Enter station name: "
+    print 'Enter station name: '
     station_name = gets.chomp
   end
 
   def read_train_number
-    print "Enter train number: "
+    print 'Enter train number: '
     train_number = gets.chomp
   end
 
   def read_train_type
-    print "Enter train type: "
+    print 'Enter train type: '
     train_type = gets.chomp.downcase
   end
 
   def read_route_name
-    print "Enter route name: "
+    print 'Enter route name: '
     route_name = gets.chomp
   end
 
   def show_error(e)
     puts e.message
   end
-
 end
