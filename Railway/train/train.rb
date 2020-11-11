@@ -10,8 +10,10 @@ class Train
   attr_reader :number, :type, :speed, :carriages, :route, :curr_station
 
   @@trains = {}
+  TRAIN_NUMBER_FORMAT = /\w{3}-?\w{2}/
 
   def initialize(number, type)
+    validate!(number)
     @number = number
     @type = type
     @speed = 0
@@ -77,7 +79,11 @@ class Train
     @@trains
   end
 
-  private
+  protected
+  def validate!(number)
+    raise 'Invalid train number' if number !~ TRAIN_NUMBER_FORMAT
+  end
 
+  private
   attr_writer :speed, :carriages, :route, :curr_station
 end
