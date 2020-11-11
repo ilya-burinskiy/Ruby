@@ -8,7 +8,7 @@ class Station
   attr_reader :name, :trains
 
   @@stations = {}
-  STATION_NAME_FORMAT = /^[A-Z][a-z]*(?:-[A-Z])?[a-z]*$/
+  STATION_NAME_FORMAT = /^[A-Z][a-z]*(?:-[A-Z])?[a-z]*$/.freeze
 
   def initialize(name)
     validate!(name)
@@ -44,5 +44,4 @@ class Station
   def validate!(name)
     raise 'Invalid station name' if name !~ STATION_NAME_FORMAT
   end
-
 end
