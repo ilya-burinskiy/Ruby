@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'instances_keeper'
 require_relative 'instances_counter'
 
 class Station
@@ -9,11 +8,13 @@ class Station
   attr_reader :name, :trains
 
   @@stations = {}
+  STATION_NAME_FORMAT = /^[A-Z][a-z]*(?:-[A-Z])?[a-z]*$/
 
   def initialize(name)
+    validate!(name)
+
     @name = name
     @trains = []
-
     @@stations[name] = self
     register_instance
   end
@@ -37,4 +38,11 @@ class Station
   def self.find(name)
     @@stations.fetch(name, nil)
   end
+
+  protected
+
+  def validate!(name)
+    raise 'Invalid station name' if name !~ STATION_NAME_FORMAT
+  end
+
 end
