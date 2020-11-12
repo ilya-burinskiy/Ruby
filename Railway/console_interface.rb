@@ -32,7 +32,7 @@ class ConsoleInterface
     route_name = gets.chomp
   end
 
-  def show_error(e)
-    puts e.message
+  def show_msg(msg)
+    puts msg
   end
 end
