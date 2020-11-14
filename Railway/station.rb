@@ -31,6 +31,10 @@ class Station
     trains.delete(train)
   end
 
+  def train_to_block
+    trains.each { |train| yield(train) }
+  end
+
   def self.all
     @@stations
   end

@@ -71,6 +71,20 @@ class Train
     curr_station.serve_train(self)
   end
 
+  def carriage_to_block
+    carriages.each { |carriage| yield(carriage) }
+  end
+
+  def find_carriage(carriage_idx)
+    carriages.fetch(carriage_idx, nil)
+  end
+
+  def carriage_exist?(carriage_idx)
+    raise "Carriage with index #{carriage_idx} does not exist" if find_carriage(carriage_idx).nil?
+
+    true
+  end
+
   def self.find(number)
     @@trains.fetch(number, nil)
   end
