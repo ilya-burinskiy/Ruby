@@ -25,7 +25,7 @@ module Accessors
     define_method(name.to_sym) { instance_variable_get(var_name.to_sym) }
 
     define_method("#{name}=") do |val|
-      if val.class != self.class.var_type(var_name)
+      if val.class != self.class.var_type(name)
         raise "Wrong class for #{var_name}. Expected #{self.class.var_type(name)}, given #{val.class}"
       end
 
