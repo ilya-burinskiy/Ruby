@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
 require_relative 'instances_counter'
+require_relative 'validation'
 
 class Station
   include InstancesCounter
-
-  attr_reader :name, :trains
+  include Validation
 
   @@stations = {}
   STATION_NAME_FORMAT = /^[A-Z][a-z]*(?:-[A-Z])?[a-z]*$/.freeze
 
-  def initialize(name)
-    validate!(name)
+  attr_reader :name, :trains
+  validate :name, :format, STATION_NAME_FORMAT
 
+  def initialize(name)
     @name = name
     @trains = []
     @@stations[name] = self
+    validate!
     register_instance
   end
 
@@ -43,9 +45,4 @@ class Station
     @@stations.fetch(name, nil)
   end
 
-  protected
-
-  def validate!(name)
-    raise 'Invalid station name' if name !~ STATION_NAME_FORMAT
-  end
 end
