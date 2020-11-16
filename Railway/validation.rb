@@ -1,4 +1,9 @@
 module Validation
+  def self.included(base)
+    base.extend ClassMethods
+    base.send :include, InstanceMethods
+  end
+
   module ClassMethods
     def validate(name, vtype, vparam = nil)
       @vars_validators ||= {}
@@ -6,9 +11,7 @@ module Validation
       @vars_validators[name] << { vtype: vtype, vparam: vparam }
     end
 
-    def vars_validators
-      @vars_validators
-    end
+    attr_reader :vars_validators
   end
 
   module InstanceMethods
@@ -19,18 +22,40 @@ module Validation
           vparam = validator_params[:vparam]
           case vtype
           when :precence
-            raise "@#{var_name} must have non nil value" if instance_variable_get("@#{var_name}".to_sym).nil?
+            validate_precence(var_name)
           when :format
-            raise "@#{var_name} does not match the format" if instance_variable_get("@#{var_name}".to_sym) !~ vparam
+            validate_format(var_name, vparam)
           when :type
-            if instance_variable_get("@#{var_name}".to_sym).class != vparam 
-              raise "@#{var_name} does not match the class"
-            end
+            validate_type(var_name, vparam)
           else
             raise 'Unknown validator type'
           end
         end
       end
     end
+
+    def valid?
+      validate!
+      true
+    rescue
+      false
+    end
+
+    private
+
+    def validate_precence(var_name)
+      raise "@#{var_name} must have non nil value" if instance_variable_get("@#{var_name}".to_sym).nil?
+    end
+
+    def validate_format(var_name, format)
+      raise "@#{var_name} does not match the format" if instance_variable_get("@#{var_name}".to_sym) !~ format 
+    end
+
+    def validate_type(var_name, cls)
+      if instance_variable_get("@#{var_name}".to_sym).class != cls 
+        raise "@#{var_name} does not match the class"
+      end
+    end
+  
   end
 end
