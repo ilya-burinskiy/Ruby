@@ -14,8 +14,6 @@ class Game
     @dealer = Dealer.new
     @deck = Deck.new
     @min_bet = 10
-    @user_bet = 0
-    @dealer_bet = 0
     @state = Start.new(self)
   end
 
@@ -39,8 +37,8 @@ class Game
   end
 
   def players_bet
-    self.user_bet += user.bet(min_bet)
-    self.dealer_bet += dealer.bet(min_bet)
+    self.user_bet = user.bet(min_bet)
+    self.dealer_bet = dealer.bet(min_bet)
   end 
 
   def choose_winner
