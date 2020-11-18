@@ -24,8 +24,7 @@ class CalcResults < GameState
     game.show_message("Your bank: #{game.get_user_bank}")
 
     if game.get_user_bank < game.min_bet || game.get_dealer_bank < game.min_bet
-      puts game.get_user_bank, game.get_dealer_bank
-      if game.get_user_bank < 10
+      if game.get_user_bank < game.min_bet
         game.show_message("You have not enough money")
       else
         game.show_message("Dealer has not enough money")
