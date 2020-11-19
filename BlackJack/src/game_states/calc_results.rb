@@ -14,10 +14,10 @@ class CalcResults < GameState
   def game_actions
     winner = game.choose_winner
 
-    unless winner.nil?
-      game.show_message("Winner is #{winner.name}")
+    if winner.nil?
+      game.show_message('Draw')
     else
-      game.show_message("Draw")
+      game.show_message("Winner is #{winner.name}")
     end
 
     game.show_players_info(false)
@@ -25,17 +25,17 @@ class CalcResults < GameState
 
     if game.get_user_bank < game.min_bet || game.get_dealer_bank < game.min_bet
       if game.get_user_bank < game.min_bet
-        game.show_message("You have not enough money")
+        game.show_message('You have not enough money')
       else
-        game.show_message("Dealer has not enough money")
+        game.show_message('Dealer has not enough money')
       end
       game.change_state(GameOver.new(game))
     else
-      game.show_message("Continue?")
+      game.show_message('Continue?')
       choices = ['y - yes', 'n - no']
       game.show_choices(choices)
       choice = game.get_user_choice
-      if choice == UserChoice::YES
+      if choice == :yes
         game.reset_hands
         game.shuffle_deck
         game.change_state(Start.new(game))
@@ -44,5 +44,4 @@ class CalcResults < GameState
       end
     end
   end
-
 end

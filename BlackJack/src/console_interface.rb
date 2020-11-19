@@ -1,7 +1,4 @@
-require_relative 'user_choice'
-
 class ConsoleInterface
-
   def get_user_name
     print 'Enter your name: '
     name = gets.chomp
@@ -12,21 +9,21 @@ class ConsoleInterface
     loop do
       print '>>> '
       input = gets.chomp.downcase
-      case input
-      when 's'
-        choice = UserChoice::SKIP_TURN
-      when 't'
-        choice = UserChoice::TAKE_CARD
-      when 'o'
-        choice = UserChoice::OPEN_CARDS
-      when 'y'
-        choice = UserChoice::YES
-      when 'n'
-        choice = UserChoice::NO
-      else
-        choice = UserChoice::WRONG_CHOICE
-      end
-      break if choice != UserChoice::WRONG_CHOICE
+      choice = case input
+               when 's'
+                 :skip_turn
+               when 't'
+                 :take_card
+               when 'o'
+                 :open_cards
+               when 'y'
+                 :yes
+               when 'n'
+                 :no
+               else
+                 :wrong_choice
+               end
+      break if choice != :wrong_choice
     end
 
     choice
@@ -37,11 +34,12 @@ class ConsoleInterface
     print "#{player.name} cards: "
     card_unicode = nil
     player.get_cards.each do |card|
-      if hide
-        card_unicode = card.get_card_back_unicode
-      else
-        card_unicode = card.get_card_unicode
-      end
+      card_unicode = if hide
+                       card.back_unicode
+                     else
+                       card.unicode
+                     end
+      card_unicode = '' << card_unicode
       print "#{card_unicode} "
     end
     puts
@@ -54,5 +52,4 @@ class ConsoleInterface
   def show_message(msg)
     puts msg
   end
-
 end

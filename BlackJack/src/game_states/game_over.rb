@@ -9,7 +9,5 @@ class GameOver < GameState
     self.class
   end
 
-  def game_actions
-  end
-
+  def game_actions; end
 end
