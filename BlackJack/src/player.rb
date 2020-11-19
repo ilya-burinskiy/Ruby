@@ -1,7 +1,6 @@
 require_relative 'hand'
 
 class Player
-
   attr_reader :name, :bank
 
   def initialize(name, bank)
@@ -35,8 +34,8 @@ class Player
     hand.cards
   end
 
-  private
+  protected
+
   attr_writer :bank
   attr_accessor :hand
-
 end

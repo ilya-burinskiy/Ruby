@@ -1,5 +1,4 @@
 class Hand
-
   attr_reader :cards
 
   def initialize
@@ -13,7 +12,7 @@ class Hand
   def get_score
     score = 0
     cards.each do |card|
-      score += card.get_score(score)
+      score += card.score(score)
     end
 
     score
@@ -27,6 +26,7 @@ class Hand
     self.cards = []
   end
 
-  private
+  protected
+
   attr_writer :cards
 end

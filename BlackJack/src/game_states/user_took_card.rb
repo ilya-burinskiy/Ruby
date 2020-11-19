@@ -12,7 +12,7 @@ class UserTookCard < GameState
   end
 
   def game_actions
-    if (game.get_dealer_score >= 17)
+    if game.get_dealer_score >= 17
       game.change_state(DealerSkippedTurn.new(game))
     else
       game.give_dealer_card

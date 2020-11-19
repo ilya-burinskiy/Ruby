@@ -5,12 +5,11 @@ require_relative 'console_interface'
 require_relative 'game_states/start'
 
 class Game
-
   attr_reader :min_bet
 
   def initialize
     @game_interface = ConsoleInterface.new
-    @user = BlackJackPlayer.new(@game_interface.get_user_name) 
+    @user = BlackJackPlayer.new(@game_interface.get_user_name)
     @dealer = Dealer.new
     @deck = Deck.new
     @min_bet = 10
@@ -39,7 +38,7 @@ class Game
   def players_bet
     self.user_bet = user.bet(min_bet)
     self.dealer_bet = dealer.bet(min_bet)
-  end 
+  end
 
   def choose_winner
     winner = nil
@@ -48,13 +47,13 @@ class Game
     user_diff = 21 - user_score
     dealer_diff = 21 - dealer_score
 
-    if (user_score == dealer_score)
+    if user_score == dealer_score
       user.take_win(user_bet)
       dealer.take_win(user_bet)
       return winner
     end
 
-    if (user_score <= 21 && dealer_score <= 21)
+    if user_score <= 21 && dealer_score <= 21
       winner = user_diff < dealer_diff ? user : dealer
     elsif user_score > 21 && dealer_score > 21
       winner = user_diff > dealer_diff ? user : dealer
@@ -66,7 +65,7 @@ class Game
 
     winner.take_win(user_bet + dealer_bet)
 
-    return winner
+    winner
   end
 
   def get_user_bank
@@ -115,7 +114,8 @@ class Game
     game_interface.show_message(msg)
   end
 
-  private
+  protected
+
   attr_accessor :user, :dealer, :deck, :user_bet, :dealer_bet, :game_interface, :state
   attr_writer :min_bet
 end
