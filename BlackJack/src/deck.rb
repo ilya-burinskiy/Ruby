@@ -1,9 +1,6 @@
-require_relative 'face'
-require_relative 'suit'
 require_relative 'card'
 
 class Deck
-
   DECK_SIZE = 52
 
   attr_reader :cards
@@ -11,9 +8,9 @@ class Deck
   def initialize
     @top = DECK_SIZE - 1
     @cards = []
-    
-    Face.values.each do |face|
-      Suit.values.each do |suit|
+
+    Card.faces.each do |face|
+      Card.suits.each do |suit|
         @cards << Card.new(face, suit)
       end
     end
@@ -31,7 +28,7 @@ class Deck
     cards.shuffle!
   end
 
-  private 
-  attr_accessor :top
+  protected
 
+  attr_accessor :top
 end
