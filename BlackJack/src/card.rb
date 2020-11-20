@@ -1,17 +1,17 @@
 class Card
   class << self
-    attr_reader :faces, :suits, :scores, :unicodes
+    attr_reader :unicodes
 
     private
 
-    attr_writer :faces, :suits, :scores, :unicodes
+    attr_writer :unicodes
 
     def create_cards_unicodes
       i = 0x1
       j = 0xA0
       self.unicodes = {}
-      suits.each do |suit|
-        faces.each do |face|
+      SUITS.each do |suit|
+        FACES.each do |face|
           unicodes[[face, suit]] = 0x1F000 + j + i
           i = face == :jack ? i + 2 : i + 1
         end
@@ -22,13 +22,13 @@ class Card
     end
   end
 
-  self.faces = %i[ace two three four five six
-                  seven eight nine ten jack queen king]
+  FACES = %i[ace two three four five six
+             seven eight nine ten jack queen king]
 
-  self.suits = %i[diamonds clubs hearts spades]
+  SUITS = %i[diamonds clubs hearts spades]
 
-  self.scores = { ace: 11, two: 2, three: 3, four: 4, five: 5, six: 6,
-                  seven: 7, eight: 8, nine: 9, ten: 10, jack: 10, queen: 10, king: 10 }
+  SCORES = { ace: 11, two: 2, three: 3, four: 4, five: 5, six: 6,
+             seven: 7, eight: 8, nine: 9, ten: 10, jack: 10, queen: 10, king: 10 }
 
   create_cards_unicodes
 
@@ -40,7 +40,7 @@ class Card
   end
 
   def score(player_score)
-    score = self.class.scores[face]
+    score = SCORES[face]
     if face == :ace
       score -= 10 if 11 + player_score > 21
     end
