@@ -8,12 +8,7 @@ class Deck
   def initialize
     @top = DECK_SIZE - 1
     @cards = []
-
-    Card.faces.each do |face|
-      Card.suits.each do |suit|
-        @cards << Card.new(face, suit)
-      end
-    end
+    fill_deck
     @cards.shuffle!
   end
 
@@ -26,6 +21,16 @@ class Deck
   def shuffle
     self.top = DECK_SIZE - 1
     cards.shuffle!
+  end
+
+  private
+  
+  def fill_deck
+    Card::FACES.each do |face|
+      Card::SUITS.each do |suit|
+        @cards << Card.new(face, suit)
+      end
+    end
   end
 
   protected
