@@ -72,8 +72,13 @@ class Game
     user.bank
   end
 
-  def get_dealer_bank
-    dealer.bank
+  def has_user_enough_money?
+    return true if user.bank >= min_bet
+    false
+  end
+
+  def has_dealer_enough_money?
+    return true if dealer.bank >= min_bet
   end
 
   def give_user_card

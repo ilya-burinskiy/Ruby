@@ -23,25 +23,20 @@ class CalcResults < GameState
     game.show_players_info(false)
     game.show_message("Your bank: #{game.get_user_bank}")
 
-    if game.get_user_bank < game.min_bet || game.get_dealer_bank < game.min_bet
-      if game.get_user_bank < game.min_bet
-        game.show_message('You have not enough money')
-      else
-        game.show_message('Dealer has not enough money')
-      end
-      game.change_state(GameOver.new(game))
-    else
+    if game.has_user_enough_money? && game.has_dealer_enough_money?
       game.show_message('Continue?')
-      choices = ['y - yes', 'n - no']
-      game.show_choices(choices)
-      choice = game.get_user_choice
-      if choice == :yes
+      game.show_choices(['y - yes', 'n - no'])
+      if game.get_user_choice == :yes
         game.reset_hands
         game.shuffle_deck
         game.change_state(Start.new(game))
       else
         game.change_state(GameOver.new(game))
       end
+    else
+      game.show_message('You have not enough money') unless game.has_user_enough_money?
+      game.show_message('Dealer has not enough money') unless game.has_dealer_enough_money?
+      game.change_state(GameOver.new(game))
     end
   end
 end
