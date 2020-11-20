@@ -11,6 +11,7 @@ class CalcResults < GameState
     self.class
   end
 
+
   def game_actions
     winner = game.choose_winner
 
@@ -23,20 +24,37 @@ class CalcResults < GameState
     game.show_players_info(false)
     game.show_message("Your bank: #{game.get_user_bank}")
 
-    if game.has_user_enough_money? && game.has_dealer_enough_money?
-      game.show_message('Continue?')
-      game.show_choices(['y - yes', 'n - no'])
-      if game.get_user_choice == :yes
-        game.reset_hands
-        game.shuffle_deck
-        game.change_state(Start.new(game))
-      else
-        game.change_state(GameOver.new(game))
-      end
+    game_over! unless game.has_user_enough_money? && game.has_dealer_enough_money?
+    if continue?
+      continue_game
     else
-      game.show_message('You have not enough money') unless game.has_user_enough_money?
-      game.show_message('Dealer has not enough money') unless game.has_dealer_enough_money?
-      game.change_state(GameOver.new(game))
+      end_game
     end
   end
+
+  private
+
+  def continue?
+    game.show_message('Continue?')
+    game.show_choices(['y - yes', 'n - no'])
+    return true if game.get_user_choice == :yes
+    false
+  end
+
+  def continue_game
+    game.reset_hands
+    game.shuffle_deck
+    game.change_state(Start.new(game))
+  end
+
+  def end_game
+    game.change_state(GameOver.new(game))
+  end
+
+  def game_over!
+    game.show_message('You have not enough money. Game over') unless game.has_user_enough_money?
+    game.show_message('Dealer has not enough money. Game over') unless game.has_dealer_enough_money?
+    game.change_state(GameOver.new(game))
+  end
+
 end
