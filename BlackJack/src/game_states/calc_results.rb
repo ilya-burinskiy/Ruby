@@ -54,7 +54,7 @@ class CalcResults < GameState
   def game_over!
     game.show_message('You have not enough money. Game over') unless game.has_user_enough_money?
     game.show_message('Dealer has not enough money. Game over') unless game.has_dealer_enough_money?
-    game.change_state(GameOver.new(game))
+    end_game
   end
 
 end
