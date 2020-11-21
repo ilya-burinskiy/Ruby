@@ -24,7 +24,11 @@ class CalcResults < GameState
     game.show_players_info(false)
     game.show_message("Your bank: #{game.get_user_bank}")
 
-    game_over! unless game.has_user_enough_money? && game.has_dealer_enough_money?
+    unless game.has_user_enough_money? && game.has_dealer_enough_money?
+      game_over! 
+      return
+    end
+
     if continue?
       continue_game
     else
